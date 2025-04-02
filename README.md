@@ -2,13 +2,26 @@
 
 # `Kariya` 🌻
 
-...
+Tiny Web App that analyses and [scores](#screenshot) the legibility of your handwriting.
+
+`Kariya` is trained on the [ImageNet](https://www.image-net.org/) database.
+
+<div style="display: flex; justify-content: center;">
+  <img src="./asset/reference/1.png" width="80%">
+</div>
+
+## Stack
+
+* Frontend *(Vue.js, Tailwind CSS, Netlify)*
+* Backend *(Flask)*
+* DB *(Firebase Realtime Database)*
+* Training and Validation Corpus *(ImageNet)*
 
 ## Screenshot
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="./asset/reference/pdf.png" width="48%">
-  <img src="./asset/reference/image.png" width="48%">
+  <img src="./asset/reference/cooked.png" width="48%">
+  <img src="./asset/reference/not_cooked.png" width="48%">
 </div>
 
 ## Usage
@@ -25,14 +38,9 @@ $ cd ..
 $ python3 main.py
 ```
 
-## Stack
-
-* Frontend *(Vue.js, Tailwind CSS, Netlify)*
-* Backend *(Flask)*
-* DB *(Firebase Realtime Database)*
-* Training and Validation Corpus *(ImageNet)*
-
 ## Architecture
+
+### Overview
 
 ```mermaid
 sequenceDiagram
@@ -83,6 +91,109 @@ sequenceDiagram
         DB->>Backend: Return historical data
         Backend->>Backend: Refine scoring algorithm
     end
+```
+
+### Database
+
+```json
+{
+  "users": {
+    "$userId": {
+      "name": "String",
+      "email": "String",
+      "profile_picture": "String",
+      "analyses": {
+        "$analysisId": {
+          "timestamp": "Timestamp",
+          "imageUrl": "String",
+          "legibilityScore": "Number",
+          "consistencyScore": "Number",
+          "totalScore": "Number",
+          "isCooked": "Boolean",
+          "classification": "String",
+          "confidence": "Number",
+          "characterRecognition": {
+            "$character": "Number"
+          },
+          "feedback": "String"
+        }
+      }
+    }
+  },
+  "analyses": {
+    "$analysisId": {
+      "userId": "String",
+      "timestamp": "Timestamp",
+      "imageUrl": "String",
+      "legibilityScore": "Number",
+      "consistencyScore": "Number",
+      "totalScore": "Number",
+      "isCooked": "Boolean",
+      "classification": "String",
+      "strokes": [
+        {
+          "points": [
+            {
+              "x": "Number",
+              "y": "Number",
+              "time": "Number"
+            }
+          ],
+          "pressure": "Number"
+        }
+      ],
+      "trainingContribution": "Boolean"
+    }
+  },
+  "modelVersions": {
+    "$versionId": {
+      "releaseDate": "Timestamp",
+      "accuracy": "Number",
+      "precision": "Number",
+      "recall": "Number",
+      "f1Score": "Number",
+      "trainingSamples": "Number",
+      "active": "Boolean"
+    }
+  }
+}
+```
+
+### Backend
+
+```mermaid
+flowchart TD
+    A[User's Handwriting Sample] --> B[Image Preprocessing]
+    B --> C[Feature Extraction]
+    C --> D[Feature Vector Matrix]
+    
+    E[(ImageNet Corpus)] --> F[Character Recognition Models]
+    F --> G[Pre-trained Model Weights]
+    
+    D --> H@{ shape: docs, label: "Training Dataset"}
+    G --> H
+    
+    H --> I@{ shape: rounded, label: "Supervised ML training epoch" }
+    I --> J[Legibility Classifier Training]
+    
+    K[(Expert-Labeled Legibility Data)] --> H
+    
+    J --> L[Trained Handwriting Legibility Model]
+    
+    M{New Handwriting Sample} --> N[Process New Sample]
+    N --> O[Extract Spatial Features]
+    O --> P[Legibility Analysis]
+    L --> P
+    P --> Q[Legibility & Recognizability Score]
+    
+    D --> R
+    G --> R
+    K --> R
+    R@{ shape: docs, label: "Validation Dataset" } --> S[Model Validation]
+    L --> S
+    S --> T[Performance Metrics]
+    T --> U[Model Refinement]
+    U --> I
 ```
 
 ## Reference
