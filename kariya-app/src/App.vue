@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <h1>Kariya</h1>
+      <h1>Kariya 🌻</h1>
       <p>Write something for Kariya to analyse your handwriting</p>
     </header>
     <main>
