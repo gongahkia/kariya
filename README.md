@@ -29,7 +29,6 @@
 
 ## Reference
 
-The name `Kariya` is in reference to [Kariya Kagetoki](https://champloo.fandom.com/wiki/Kariya_Kagetoki), *(better known as the "Hand of God")*, an elite samurai working for the Shogunate. He first makes an appearance in the episode, [Evanescent Encounter Part 1](https://champloo.fandom.com/wiki/Evanescent_Encounter_(Part_1)) of the anime [Samurai Champloo](https://champloo.fandom.com/wiki/Samurai_Champloo_Wiki).
-
+The name `Kariya` is in reference to [Kariya Kagetoki](https://champloo.fandom.com/wiki/Kariya_Kagetoki) *(better known as the "Hand of God")*, an elite samurai working for the Shogunate. He first makes an appearance in the episode, [Evanescent Encounter Part 1](https://champloo.fandom.com/wiki/Evanescent_Encounter_(Part_1)) of the anime [Samurai Champloo](https://champloo.fandom.com/wiki/Samurai_Champloo_Wiki).
 
 ![](./asset/logo/kariya.webp)
