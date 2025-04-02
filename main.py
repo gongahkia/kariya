@@ -11,7 +11,7 @@ import signal
 
 def run_frontend():
     print("Starting Vue.js frontend...")
-    os.chdir("frontend")
+    os.chdir("kariya-app")
     frontend_process = subprocess.Popen(
         "npm run serve", 
         shell=True,

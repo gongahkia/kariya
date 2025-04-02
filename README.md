@@ -2,6 +2,15 @@
 
 # `Kariya` 🌻
 
+...
+
+## Screenshot
+
+<div style="display: flex; justify-content: space-between;">
+  <img src="./asset/reference/pdf.png" width="48%">
+  <img src="./asset/reference/image.png" width="48%">
+</div>
+
 ## Usage
 
 ```console
@@ -21,18 +30,59 @@ $ python3 main.py
 * Frontend *(Vue.js, Tailwind CSS, Netlify)*
 * Backend *(Flask)*
 * DB *(Firebase Realtime Database)*
-
-## Screenshot
-
-<div style="display: flex; justify-content: space-between;">
-  <img src="./asset/reference/pdf.png" width="48%">
-  <img src="./asset/reference/image.png" width="48%">
-</div>
+* Training and Validation Corpus *(ImageNet)*
 
 ## Architecture
 
 ```mermaid
-...
+sequenceDiagram
+    actor User
+    participant Frontend as Vue.js Frontend
+    participant Backend as Flask Backend
+    participant ImageNet as ImageNet Service
+    participant DB as Firebase Realtime Database
+    participant Social as Instagram, Facebook, LinkedIn API
+
+    User->>Frontend: Writes on canvas
+    Frontend->>Frontend: Captures handwriting strokes
+    
+    User->>Frontend: Clicks "Analyze" button
+    Frontend->>Backend: POST /api/analyze with image data
+    
+    Backend->>Backend: Preprocesses image
+    Backend->>ImageNet: Send processed image for classification
+    ImageNet->>Backend: Return classification results
+    
+    Backend->>Backend: Calculate legibility score
+    Backend->>Backend: Calculate consistency score
+    Backend->>Backend: Determine if handwriting is "cooked"
+    
+    Backend->>DB: Store analysis results
+    DB->>Backend: Confirm storage
+    
+    Backend->>Frontend: Return analysis results
+    Frontend->>Frontend: Display scores and verdict
+    
+    User->>Frontend: Clicks "Share" button
+    Frontend->>Social: Request sharing to selected platform
+    Social->>User: Open sharing dialog
+    
+    User->>Frontend: Clicks "Clear" button
+    Frontend->>Frontend: Reset canvas
+    
+    alt User wants to save results
+        User->>Frontend: Clicks "Save" button
+        Frontend->>Backend: POST /api/save with user ID and results
+        Backend->>DB: Store user results
+        DB->>Backend: Confirm storage
+        Backend->>Frontend: Return success status
+    end
+    
+    loop Improvement cycle
+        Backend->>DB: Fetch historical data
+        DB->>Backend: Return historical data
+        Backend->>Backend: Refine scoring algorithm
+    end
 ```
 
 ## Reference
