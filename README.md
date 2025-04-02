@@ -6,7 +6,7 @@ Tiny Web App that analyses and [scores](#screenshot) the legibility of your hand
 
 `Kariya` is trained on the [ImageNet](https://www.image-net.org/) database.
 
-<div style="display: flex; justify-content: center;">
+<div align="center">
   <img src="./asset/reference/1.png" width="80%">
 </div>
 
