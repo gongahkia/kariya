@@ -5,13 +5,21 @@
 ## Usage
 
 ```console
-...
+$ git clone https://github.com/gongahkia/kariya
+$ cd kariya/kariya-app
+$ npm install
+$ cd ../backend
+$ python3 -m venv myenv
+$ source myenv/bin/activate
+$ pip install -r requirements.txt
+$ cd ..
+$ python3 main.py
 ```
 
 ## Stack
 
 * Frontend *(Vue.js, Tailwind CSS, Netlify)*
-* Backend *(JavaScript)*
+* Backend *(Flask)*
 * DB *(Firebase Realtime Database)*
 
 ## Screenshot
